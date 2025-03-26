@@ -1,0 +1,36 @@
+<%- include('layout') %>
+
+<div class="container">
+    <h2>Your Journal Entries</h2>
+
+    <a href="/add">
+        <button>Add Entry</button>
+    </a>
+
+    <form action="/" method="GET">
+        <input type="text" name="query" placeholder="Search by title or content" value="<%= searchQuery || '' %>">
+        <button type="submit">Search</button>
+    </form>
+
+    <% if (entries.length > 0) { %>
+        <ul>
+            <% entries.forEach(entry => { %>
+                <li>
+                    <h3><%= entry.title %></h3>
+                    <p><%= entry.content %></p>
+                    <small>Posted on: <%= entry.created_at %></small>
+
+                    <a href="/edit/<%= entry.id %>">
+                        <button>Edit</button>
+                    </a>
+
+                    <form action="/delete/<%= entry.id %>" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No entries found. <a href="/add">Write one</a>!</p>
+    <% } %>
+</div>
