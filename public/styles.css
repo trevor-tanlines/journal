@@ -5,19 +5,20 @@
     box-sizing: border-box;
 }
 
-/* Body */
+/* Body - Dark Theme */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #1c1c1c;  /* Dark background */
-    color: #e0e0e0;  /* Light text color */
+    background-color: #121212;
+    color: #ddd;
     line-height: 1.6;
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     flex-direction: column;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* Container for the journal content */
@@ -25,19 +26,21 @@ body {
     width: 100%;
     max-width: 900px;
     margin: 20px auto;
-    background-color: #2a2a2a;  /* Slightly lighter dark background */
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    padding: 20px;
-    overflow-y: auto;  /* Allow vertical scrolling within the container */
+    background: linear-gradient(135deg, #1e1e2e, #2a2a3b);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(102, 51, 153, 0.3);
+    padding: 25px;
+    border: 1px solid #6a5acd;
+    min-height: 100%;
 }
 
 /* Header Styling */
 h2 {
-    color: #a8a8d8;  /* Light periwinkle-ish color */
-    font-size: 28px;
+    color: #b39ddb;
+    font-size: 30px;
     text-align: center;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(179, 157, 219, 0.8);
 }
 
 /* Search Form Styling */
@@ -51,32 +54,33 @@ form {
 form input[type="text"] {
     padding: 10px;
     width: 70%;
-    border: 2px solid #555;  /* Darker border */
+    border: 2px solid #6a5acd;
+    background: #222;
+    color: #ddd;
     border-radius: 5px;
     font-size: 16px;
     margin-right: 10px;
-    background-color: #333;  /* Dark input background */
-    color: #e0e0e0;  /* Light text color */
 }
 
 form button {
     padding: 10px 20px;
-    background-color: #6a5acd;  /* Periwinkle blue */
+    background: #8e24aa;
     color: white;
     border: none;
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease;
+    box-shadow: 0 3px 8px rgba(142, 36, 170, 0.6);
 }
 
 form button:hover {
-    background-color: #5a4bb7;  /* Darker periwinkle on hover */
+    background: #6a1b9a;
 }
 
 /* Button styling for Add, Edit, Delete */
 button {
-    background-color: #6a5acd;  /* Periwinkle blue */
+    background: #3949ab;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -87,21 +91,22 @@ button {
     cursor: pointer;
     border-radius: 5px;
     margin: 5px;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease;
+    box-shadow: 0 3px 8px rgba(57, 73, 171, 0.6);
 }
 
 button:hover {
-    background-color: #5a4bb7;  /* Darker periwinkle on hover */
+    background: #283593;
 }
 
 /* Specific Style for the Add Entry Button */
 a button {
-    background-color: #3b9ad8;  /* Soft blue */
+    background: #7e57c2;
     margin-bottom: 20px;
 }
 
 a button:hover {
-    background-color: #2d88b8;  /* Darker blue on hover */
+    background: #5e35b1;
 }
 
 /* List of Entries */
@@ -112,27 +117,79 @@ ul {
 
 li {
     padding: 15px;
-    background-color: #383838;  /* Darker list item background */
+    background: #1e1e2e;
     border-radius: 8px;
     margin-bottom: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(102, 51, 153, 0.3);
+    transition: transform 0.3s ease;
+}
+
+li:hover {
+    transform: scale(1.02);
 }
 
 li h3 {
     font-size: 24px;
-    color: #a8a8d8;  /* Light periwinkle color */
+    color: #b39ddb;
 }
 
 li p {
     font-size: 16px;
-    color: #ccc;  /* Light gray text */
+    color: #aaa;
 }
 
 small {
     display: block;
     font-size: 12px;
-    color: #999;  /* Lighter gray for small text */
+    color: #888;
     margin-top: 10px;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #bbb;
+    font-size: 14px;
+}
+
+/* Journal Entry Textarea */
+textarea {
+    width: 100%;
+    min-height: 250px; /* Adjust for better space */
+    padding: 12px;
+    font-size: 18px;
+    background: #1e1e2e; /* Matches dark theme */
+    color: #ddd;
+    border: 2px solid #6a5acd; /* Periwinkle border */
+    border-radius: 8px;
+    resize: vertical; /* Allow user to expand */
+    box-shadow: 0 4px 8px rgba(106, 90, 205, 0.3);
+}
+
+/* Optional: Auto-expand textarea */
+textarea:focus {
+    border-color: #b39ddb;
+    outline: none;
+    box-shadow: 0 0 10px rgba(179, 157, 219, 0.7);
+}
+
+
+/* Neon Glow Effect */
+@keyframes neonGlow {
+    0% {
+        text-shadow: 0 0 5px #b39ddb, 0 0 10px #b39ddb;
+    }
+    50% {
+        text-shadow: 0 0 10px #d1c4e9, 0 0 20px #d1c4e9;
+    }
+    100% {
+        text-shadow: 0 0 5px #b39ddb, 0 0 10px #b39ddb;
+    }
+}
+
+h2 {
+    animation: neonGlow 2s infinite alternate;
 }
 
 /* Responsiveness */

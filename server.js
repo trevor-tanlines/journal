@@ -49,7 +49,7 @@ app.get("/", async (req, res) => {
 
 // GET route for adding a new journal entry
 app.get("/add", (req, res) => {
-    res.render("add");
+res.render('add', { body: '' });
 });
 
 
