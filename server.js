@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = 3000;
 
-// Database connection setup
 const db = new pg.Pool({
     user: "postgres",  
     host: "localhost",
@@ -18,28 +17,24 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// Home Route - Display all journal entries
 app.get("/", async (req, res) => {
-    const searchQuery = req.query.search || '';  // Get search query from request (if available)
+    const searchQuery = req.query.search || '';  
 
     try {
-        // Fetch entries from the database (with or without filtering)
         const queryText = searchQuery
             ? "SELECT * FROM entries WHERE title ILIKE $1 OR category ILIKE $1 ORDER BY created_at DESC"
             : "SELECT * FROM entries ORDER BY created_at DESC";
 
         const result = await db.query(queryText, searchQuery ? [`%${searchQuery}%`] : []);
 
-        // Format the created_at date for each entry
         const entries = result.rows.map(entry => {
-            entry.created_at = moment(entry.created_at).format('MMMM Do YYYY, h:mm:ss a'); // Format date here
+            entry.created_at = moment(entry.created_at).format('MMMM Do YYYY, h:mm:ss a'); 
             return entry;
         });
 
-        // Render the view and pass entries and searchQuery to the layout
-        res.render("index", { entries, searchQuery, body: 'index' }); // This is crucial to render the body properly
+        res.render("index", { entries, searchQuery, body: 'index' }); 
     } catch (err) {
-        console.error("Database Error:", err); // Print actual error
+        console.error("Database Error:", err); 
         res.send("Error loading journal entries");
     }
 });
@@ -47,13 +42,11 @@ app.get("/", async (req, res) => {
 
 
 
-// GET route for adding a new journal entry
 app.get("/add", (req, res) => {
 res.render('add', { body: '' });
 });
 
 
-// Add a new journal entry
 app.post("/add", async (req, res) => {
     const { title, content, category } = req.body;
     try {
@@ -65,7 +58,6 @@ app.post("/add", async (req, res) => {
     }
 });
 
-// Route for editing an entry
 app.get("/edit/:id", async (req, res) => {
     const entryId = req.params.id;
     try {
@@ -78,19 +70,16 @@ app.get("/edit/:id", async (req, res) => {
     }
 });
 
-// Handle updating an entry
 app.post("/edit/:id", async (req, res) => {
-    const entryId = req.params.id;  // Get the entry ID from the URL
-    const { title, content, category } = req.body;  // Get updated data from the form
+    const entryId = req.params.id;  
+    const { title, content, category } = req.body;  
 
     try {
-        // Update the entry in the database
         await db.query(
             "UPDATE entries SET title = $1, content = $2, category = $3 WHERE id = $4", 
             [title, content, category, entryId]
         );
         
-        // Redirect to the homepage to see the updated entries
         res.redirect("/");
     } catch (err) {
         console.error(err);
@@ -98,7 +87,6 @@ app.post("/edit/:id", async (req, res) => {
     }
 });
 
-// Search
 app.get("/search", async (req, res) => {
     const query = req.query.query;
     try {
@@ -111,7 +99,6 @@ app.get("/search", async (req, res) => {
 });
 
 
-// Delete an entry
 app.post("/delete/:id", async (req, res) => {
     try {
         await db.query("DELETE FROM entries WHERE id = $1", [req.params.id]);
